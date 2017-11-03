@@ -58,6 +58,21 @@ class BSDS(DataProvider):
 
     @classmethod
     def segmentation(cls, image_id: str) -> np.ndarray:
+        """Parse the image segmentation mask.
+
+        Parameters
+        ----------
+        image_id : str
+
+        Returns
+        -------
+        np.ndarray
+
+        References
+        ----------
+        https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/seg-format.txt
+
+        """
         assert image_id in cls._SEGMENTATIONS, 'Unrecognized segmentation id'
 
         with open(join(cls.BASE_DIR, cls._SEGMENTATIONS[image_id]), 'r') as f:
