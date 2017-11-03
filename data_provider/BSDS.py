@@ -9,7 +9,7 @@ from data_provider import DATA_DIR
 
 BASE_DIR = join(DATA_DIR, 'BSDS300')
 
-_SEGMENTATIONS = {
+SEGMENTATIONS = {
     image_seg.split('.')[0]: join('human', channel, user_dir, image_seg)
     for channel in listdir(join(BASE_DIR, 'human'))
     for user_dir in listdir(join(BASE_DIR, 'human', channel))
@@ -49,9 +49,9 @@ def segmentation(image_id: str) -> np.ndarray:
     https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/seg-format.txt
 
     """
-    assert image_id in _SEGMENTATIONS, 'Unrecognized segmentation id'
+    assert image_id in SEGMENTATIONS, 'Unrecognized segmentation id'
 
-    with open(join(BASE_DIR, _SEGMENTATIONS[image_id]), 'r') as f:
+    with open(join(BASE_DIR, SEGMENTATIONS[image_id]), 'r') as f:
         # Ignore all the lines up to the `data` line
         for line in f:
             line = line.strip('\n')
