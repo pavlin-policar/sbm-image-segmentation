@@ -71,6 +71,6 @@ def segmentation(image_id: str) -> np.ndarray:
         # We've reached the data portion, so start parsing that
         for line in f:
             segment, row, col_start, col_end = map(int, line.strip('\n').split(' '))
-            seg_mask[row, col_start:col_end] = segment
+            seg_mask[row, col_start:col_end + 1] = segment
 
     return seg_mask
