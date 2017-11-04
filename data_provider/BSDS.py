@@ -21,14 +21,12 @@ def ids() -> Dict[str, str]:
     train_ = listdir(join(BASE_DIR, 'images', 'train'))
     files = {img_id.split('.')[0]: 'train/%s' % img_id for img_id in train_}
     test_ = listdir(join(BASE_DIR, 'images', 'test'))
-    files.update(
-        {img_id.split('.')[0]: 'test/%s' % img_id for img_id in test_})
+    files.update({img_id.split('.')[0]: 'test/%s' % img_id for img_id in test_})
     return files
 
 
 def load(image_id: str) -> Union[np.ndarray, List[np.ndarray]]:
     image_ids = ids()
-
     assert image_id in image_ids, 'Unrecognized image id'
     return imread(join(BASE_DIR, 'images', image_ids[image_id]))
 
