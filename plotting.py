@@ -5,21 +5,43 @@ import seaborn as sns
 
 import graph_tool.draw
 from data_provider import BSDS
-from image import image_to_graph, node2pixel
+from image import image_to_graph, node2pixel, sbm_segmentation
 
 sns.set('paper', 'whitegrid')
 
 
 def image_graph(image_id: str):
     image_id = str(image_id)
-    image = BSDS.load(image_id)[:20, :20]
+    top, left = 100, 200
+    height, width = 100, 100
+    image = BSDS.load(image_id)[top:top + height, left:left + width]
     graph = image_to_graph(image, 2, np.sqrt(2), 4)
-    print(graph.vertex(43).out_degree())
 
-    pos = graph.new_vertex_property('vector<float>')
+    colors = graph.new_vertex_property('vector<double>')
     for node in graph.vertices():
-        pos[node] = node2pixel(int(node), image)
-    graph_tool.draw.graph_draw(graph, pos=pos)
+        colors[node] = image[node2pixel(int(node), image)] / 255
+
+    positions = graph.new_vertex_property('vector<float>')
+    for node in graph.vertices():
+        positions[node] = reversed(node2pixel(int(node), image))
+
+    graph_tool.draw.graph_draw(graph, pos=positions, vertex_fill_color=colors, vertex_size=5)
+
+
+def image_partition(image_id: str):
+    image_id = str(image_id)
+    top, left = 100, 200
+    height, width = 100, 100
+    image = BSDS.load(image_id)[top:top + height, left:left + width]
+    graph = image_to_graph(image, 2, np.sqrt(2), 4)
+
+    segmentation = sbm_segmentation(graph, image)
+
+    positions = graph.new_vertex_property('vector<float>')
+    for node in graph.vertices():
+        positions[node] = reversed(node2pixel(int(node), image))
+
+    graph_tool.draw.graph_draw(graph, pos=positions, vertex_fill_color=segmentation, vertex_size=5)
 
 
 def true_segmentation(image_id: str):
