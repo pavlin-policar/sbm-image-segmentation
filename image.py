@@ -60,6 +60,15 @@ def image_to_graph(image, d_max, sigma_x, sigma_i):
     gt.Graph
         A weighted undirected graph with a `weight` edge property.
 
+    References
+    ----------
+    ..  [1] Shi, Jianbo, and Jitendra Malik. "Normalized cuts and image
+        segmentation." IEEE Transactions on pattern analysis and machine
+        intelligence 22.8 (2000): 888-905.
+    ..  [2] Browet, Arnaud, Pierre-Antoine Absil, and Paul Van Dooren.
+        "Community Detection for Hierarchical Image Segmentation." IWCIA. Vol.
+        11. 2011.
+
     """
     graph = gt.Graph(directed=False)
     graph.ep.weight = graph.new_edge_property('double')
