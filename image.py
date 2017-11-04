@@ -1,8 +1,12 @@
 from colorsys import rgb_to_hsv
 from typing import Tuple, Iterable
 
+import fire
 import graph_tool as gt
+from graph_tool import inference
 import numpy as np
+
+from data_provider import BSDS
 
 
 def pixel2node(i: int, j: int, image: np.ndarray) -> int:
@@ -118,9 +122,27 @@ def image_to_graph(image, d_max, sigma_x, sigma_i):
     return graph
 
 
-if __name__ == '__main__':
-    from data_provider import BSDS
+def sbm_segmentation(graph: gt.Graph, image: np.ndarray) -> np.ndarray:
+    state = inference.minimize_blockmodel_dl(
+        graph,
+        state_args=dict(recs=[graph.ep.weight], rec_types=['real-exponential']),
+    )
+    blocks = state.get_blocks()
 
-    graph = image_to_graph(BSDS.load('3096'), 1, sigma_x=np.sqrt(2), sigma_i=4)
-    print(graph.num_vertices())
-    print(graph.num_edges())
+    segmentation = np.zeros(image.shape[:2])
+    for node in graph.vertices():
+        segmentation[node2pixel(int(node), image)] = blocks[node]
+
+    return segmentation
+
+
+def segment_image(image_id: str):
+    image_id = str(image_id)
+    image = BSDS.load(image_id)[:40, :40]
+    graph = image_to_graph(image, 2, sigma_x=np.sqrt(2), sigma_i=4)
+
+    sbm_segmentation(graph)
+
+
+if __name__ == '__main__':
+    fire.Fire()
