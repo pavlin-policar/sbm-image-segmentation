@@ -1,6 +1,8 @@
-from typing import Tuple
+from colorsys import rgb_to_hsv
+from typing import Tuple, Iterable
 
 import numpy as np
+import graph_tool as gt
 
 
 def pixel2node(i: int, j: int, image: np.ndarray) -> int:
@@ -13,3 +15,98 @@ def node2pixel(node: int, image: np.ndarray) -> Tuple[int, int]:
     """Convert a single integer node id to pixel indices i, j."""
     height = image.shape[0]
     return node // height, node % height
+
+
+def l2_distance(vec1: Iterable, vec2: Iterable) -> float:
+    """Compute the l2 distance between two vectors."""
+    vec1, vec2 = np.array(vec1), np.array(vec2)
+    diff = vec1 - vec2
+    return np.sqrt(diff.dot(diff))
+
+
+def pixel_vec(y: int, x: int, image: np.ndarray) -> np.ndarray:
+    """Get a feature vector represnting a pixel on the image.
+
+    If a grayscale image is given, return the pixel intensity value, otherwise
+    return the HSV transform for colored images.
+
+    References
+    ----------
+    ..  [1] Browet, Arnaud, Pierre-Antoine Absil, and Paul Van Dooren.
+        "Community Detection for Hierarchical Image Segmentation." IWCIA. Vol.
+        11. 2011.
+
+    """
+    if image.ndim == 2:
+        return image[y, x]
+    return rgb_to_hsv(*image[y, x])
+
+
+def image_to_graph(image, d_max, sigma_x, sigma_i):
+    """Convert an image to a weighted graph.
+
+    Parameters
+    ----------
+    image : np.ndarray
+    d_max : float
+        The maximum distance between two pixels that will get an edge.
+    sigma_x : float
+        User defined parameter for inter-pixel distance weight.
+    sigma_i : float
+        User defined parameter for inter-pixel similarity weight.
+
+    Return
+    ------
+    gt.Graph
+        A weighted undirected graph with a `weight` edge property.
+
+    """
+    graph = gt.Graph(directed=False)
+    graph.ep.weight = graph.new_edge_property('double')
+
+    height, width = image.shape[:2]
+
+    # Add the appropriate number of vertices to the graph
+    graph.add_vertex(height * width)
+
+    for (y, x), node in zip(np.ndindex((height, width)), graph.vertices()):
+        d_max_int = int(np.ceil(d_max))
+        for j in range(y - d_max_int, y + d_max_int):
+            # If we're outside the boundaries of the image skip iteration
+            if j < 0 or j >= height:
+                continue
+            for i in range(x - d_max_int, x + d_max_int):
+                # If we're outside the boundaries of the image skip iteration
+                if i < 0 or i >= width:
+                    continue
+
+                # We won't connect the pixel with itself
+                if j == y and i == x:
+                    continue
+
+                # Check if euclidean distance exceeds `d_max` then skip
+                distance = l2_distance((j, i), (y, x))
+                if distance > d_max:
+                    continue
+
+                # Add the edge between the pixelds
+                edge = graph.add_edge(pixel2node(y, x, image), pixel2node(j, i, image))
+                graph.ep.weight[edge] = (
+                    # Distance term
+                    np.exp(-distance ** 2 / sigma_x ** 2) *
+                    # Pixel similarity term
+                    np.exp(
+                        -l2_distance(pixel_vec(y, x, image), pixel_vec(j, i, image)) ** 2
+                        / sigma_i ** 2
+                    )
+                )
+
+    return graph
+
+
+if __name__ == '__main__':
+    from data_provider import BSDS
+
+    graph = image_to_graph(BSDS.load('3096'), 1, sigma_x=np.sqrt(2), sigma_i=4)
+    print(graph.num_vertices())
+    print(graph.num_edges())

@@ -3,10 +3,10 @@ import unittest
 import numpy as np
 
 from data_provider import BSDS
-from image import pixel2node, node2pixel
+from image import pixel2node, node2pixel, pixel_vec, l2_distance
 
 
-class TestImage(unittest.TestCase):
+class TestImagePixelConversion(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.image = BSDS.load('3096')
@@ -37,4 +37,28 @@ class TestImage(unittest.TestCase):
             j,
             j_,
             'Transformed `j` coordinate does not match initial value',
+        )
+
+
+class TestImageSimilarity(unittest.TestCase):
+    def test_pixel_vec(self):
+        image = np.array([
+            [[0, 0, 0], [0, 0, 0]],
+            [[100, 50, 0], [100, 75, 0]],
+            [[255, 0, 0], [0, 255, 0]],
+        ])
+
+        dist_same = l2_distance(pixel_vec(0, 0, image), pixel_vec(0, 1, image))
+        self.assertEqual(dist_same, 0, 'Distance of identical pixels in not 0')
+
+        dist_similar = l2_distance(pixel_vec(1, 0, image), pixel_vec(1, 1, image))
+        dist_different = l2_distance(pixel_vec(2, 0, image), pixel_vec(2, 1, image))
+
+        self.assertTrue(
+            dist_same < dist_similar,
+            'dist_same is not smaller than dist_similar'
+        )
+        self.assertTrue(
+            dist_similar < dist_different,
+            'dist_similar is not smaller than dist different'
         )
