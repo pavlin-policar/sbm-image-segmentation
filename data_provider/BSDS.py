@@ -44,7 +44,7 @@ def segmentation(image_id: str) -> np.ndarray:
 
     References
     ----------
-    https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/seg-format.txt
+    ..  [1] https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/seg-format.txt
 
     """
     assert image_id in SEGMENTATIONS, 'Unrecognized segmentation id'
