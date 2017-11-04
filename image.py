@@ -1,8 +1,8 @@
 from colorsys import rgb_to_hsv
 from typing import Tuple, Iterable
 
-import numpy as np
 import graph_tool as gt
+import numpy as np
 
 
 def pixel2node(i: int, j: int, image: np.ndarray) -> int:
@@ -70,15 +70,10 @@ def image_to_graph(image, d_max, sigma_x, sigma_i):
         11. 2011.
 
     """
-    graph = gt.Graph(directed=False)
-    graph.ep.weight = graph.new_edge_property('double')
-
     height, width = image.shape[:2]
+    edges = {}
 
-    # Add the appropriate number of vertices to the graph
-    graph.add_vertex(height * width)
-
-    for (y, x), node in zip(np.ndindex((height, width)), graph.vertices()):
+    for y, x in np.ndindex((height, width)):
         d_max_int = int(np.ceil(d_max))
         for j in range(y - d_max_int, y + d_max_int):
             # If we're outside the boundaries of the image skip iteration
@@ -100,11 +95,7 @@ def image_to_graph(image, d_max, sigma_x, sigma_i):
 
                 # Add the edge between the pixels
                 node1, node2 = pixel2node(y, x, image), pixel2node(j, i, image)
-                # If the edge already exists, don't add another one
-                if graph.edge(node1, node2):
-                    continue
-                edge = graph.add_edge(node1, node2)
-                graph.ep.weight[edge] = (
+                edges[frozenset((node1, node2))] = (
                     # Distance term
                     np.exp(-distance ** 2 / sigma_x ** 2) *
                     # Pixel similarity term
@@ -113,6 +104,16 @@ def image_to_graph(image, d_max, sigma_x, sigma_i):
                         / sigma_i ** 2
                     )
                 )
+
+    # Create the corresponding graph object
+    graph = gt.Graph(directed=False)
+    graph.ep.weight = graph.new_edge_property('double')
+    # Add the appropriate number of vertices to the graph
+    graph.add_vertex(height * width)
+    graph.add_edge_list(edges)
+
+    for edge in graph.edges():
+        graph.ep.weight[edge] = edges[frozenset((edge.source(), edge.target()))]
 
     return graph
 
