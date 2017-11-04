@@ -26,7 +26,10 @@ def image_graph(image_id: str):
     for node in graph.vertices():
         positions[node] = reversed(node2pixel(int(node), image))
 
-    graph_tool.draw.graph_draw(graph, pos=positions, vertex_fill_color=colors, vertex_size=5)
+    graph_tool.draw.graph_draw(
+        graph, pos=positions, vertex_fill_color=colors, vertex_size=3,
+        edge_pen_width=graph.ep.weight,
+    )
 
 
 def image_partition(image_id: str):

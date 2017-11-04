@@ -103,10 +103,7 @@ def image_to_graph(image, d_max, sigma_x, sigma_i):
                     # Distance term
                     np.exp(-distance ** 2 / sigma_x ** 2) *
                     # Pixel similarity term
-                    np.exp(
-                        -l2_distance(pixel_vec(y, x, image), pixel_vec(j, i, image)) ** 2
-                        / sigma_i ** 2
-                    )
+                    np.exp(-l2_distance(pixel_vec(y, x, image), pixel_vec(j, i, image)) ** 2 / sigma_i ** 2)
                 )
 
     # Create the corresponding graph object
@@ -134,14 +131,6 @@ def sbm_segmentation(graph: gt.Graph, image: np.ndarray) -> np.ndarray:
         segmentation[node2pixel(int(node), image)] = blocks[node]
 
     return segmentation
-
-
-def segment_image(image_id: str):
-    image_id = str(image_id)
-    image = BSDS.load(image_id)[:40, :40]
-    graph = image_to_graph(image, 2, sigma_x=np.sqrt(2), sigma_i=4)
-
-    sbm_segmentation(graph)
 
 
 if __name__ == '__main__':
