@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import matplotlib.cm as cm
+from skimage import segmentation
 
 import graph_tool.draw
 from data_provider import BSDS
@@ -39,10 +40,10 @@ def image_partition(image_id: str):
     image = BSDS.load(image_id)[top:top + height, left:left + width]
     graph = image_to_graph(image, 3, np.sqrt(2), 4)
 
-    segmentation = sbm_segmentation(graph, image)
+    seg_mask = sbm_segmentation(graph, image)
     colors = graph.new_vertex_property('vector<float>')
-    for idx in np.ndindex(segmentation.shape[:2]):
-        colors[pixel2node(*idx, image)] = cm.terrain(segmentation[idx] / np.max(segmentation))
+    for idx in np.ndindex(seg_mask.shape[:2]):
+        colors[pixel2node(*idx, image)] = cm.terrain(seg_mask[idx] / np.max(seg_mask))
 
     positions = graph.new_vertex_property('vector<float>')
     for node in graph.vertices():
@@ -53,7 +54,7 @@ def image_partition(image_id: str):
 
 def true_segmentation(image_id: str):
     image_id = str(image_id)
-    image, segmentation = BSDS.load(image_id), BSDS.segmentation(image_id)
+    image, seg_mask = BSDS.load(image_id), BSDS.segmentation(image_id)
 
     ax = plt.subplot(121)
     ax.set_title('Original image')
@@ -64,11 +65,23 @@ def true_segmentation(image_id: str):
 
     ax = plt.subplot(122)
     ax.set_title('True segmentation mask')
-    ax.imshow(segmentation)
+    ax.imshow(seg_mask)
     ax.grid(False)
     ax.set_xticklabels([])
     ax.set_yticklabels([])
 
+    plt.show()
+
+
+def slic_superpixel(image_id: str):
+    image_id = str(image_id)
+    image = BSDS.load(image_id)
+    superpixels = segmentation.slic(image, n_segments=1000, compactness=10)
+
+    plt.imshow(segmentation.mark_boundaries(image, superpixels, color=[1, 1, 1]))
+    plt.grid(False)
+    plt.xticks([])
+    plt.yticks([])
     plt.show()
 
 

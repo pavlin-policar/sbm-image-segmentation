@@ -3,10 +3,8 @@ from typing import Tuple, Iterable
 
 import fire
 import graph_tool as gt
-from graph_tool import inference
 import numpy as np
-
-from data_provider import BSDS
+from graph_tool import inference
 
 
 def pixel2node(i: int, j: int, image: np.ndarray) -> int:
