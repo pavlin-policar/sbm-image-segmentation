@@ -98,8 +98,12 @@ def image_to_graph(image, d_max, sigma_x, sigma_i):
                 if distance > d_max:
                     continue
 
-                # Add the edge between the pixelds
-                edge = graph.add_edge(pixel2node(y, x, image), pixel2node(j, i, image))
+                # Add the edge between the pixels
+                node1, node2 = pixel2node(y, x, image), pixel2node(j, i, image)
+                # If the edge already exists, don't add another one
+                if graph.edge(node1, node2):
+                    continue
+                edge = graph.add_edge(node1, node2)
                 graph.ep.weight[edge] = (
                     # Distance term
                     np.exp(-distance ** 2 / sigma_x ** 2) *
