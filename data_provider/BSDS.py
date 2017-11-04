@@ -1,6 +1,6 @@
 from os import listdir
 from os.path import join
-from typing import Dict, Union, List
+from typing import Dict
 
 import numpy as np
 from scipy.ndimage import imread
@@ -25,7 +25,7 @@ def ids() -> Dict[str, str]:
     return files
 
 
-def load(image_id: str) -> Union[np.ndarray, List[np.ndarray]]:
+def load(image_id: str) -> np.ndarray:
     image_ids = ids()
     assert image_id in image_ids, 'Unrecognized image id'
     return imread(join(BASE_DIR, 'images', image_ids[image_id]))
