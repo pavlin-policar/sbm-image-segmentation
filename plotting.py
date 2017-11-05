@@ -54,9 +54,7 @@ def image_partition(image_id: str, interactive: bool=False):
         graph_tool.draw.graph_draw(graph, pos=positions, vertex_fill_color=colors, vertex_size=5)
     else:
         plt.imshow(segmentation.mark_boundaries(image, seg_mask, color=[1, 1, 1]))
-        plt.grid(False)
-        plt.xticks([])
-        plt.yticks([])
+        plt.grid(False), plt.xticks([]), plt.yticks([])
         plt.show()
 
 
@@ -67,16 +65,12 @@ def true_segmentation(image_id: str):
     ax = plt.subplot(121)
     ax.set_title('Original image')
     ax.imshow(image)
-    ax.grid(False)
-    ax.set_xticklabels([])
-    ax.set_yticklabels([])
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
 
     ax = plt.subplot(122)
     ax.set_title('True segmentation mask')
     ax.imshow(seg_mask)
-    ax.grid(False)
-    ax.set_xticklabels([])
-    ax.set_yticklabels([])
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
 
     plt.show()
 
@@ -87,9 +81,7 @@ def slic_superpixel(image_id: str):
     superpixels = segmentation.slic(image, n_segments=1000, compactness=10)
 
     plt.imshow(segmentation.mark_boundaries(image, superpixels, color=[1, 1, 1]))
-    plt.grid(False)
-    plt.xticks([])
-    plt.yticks([])
+    plt.grid(False), plt.xticks([]), plt.yticks([])
     plt.show()
 
 
