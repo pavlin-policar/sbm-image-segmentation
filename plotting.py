@@ -33,23 +33,31 @@ def image_graph(image_id: str):
     )
 
 
-def image_partition(image_id: str):
+def image_partition(image_id: str, interactive: bool=False):
     image_id = str(image_id)
     top, left = 100, 200
     height, width = 100, 100
     image = BSDS.load(image_id)[top:top + height, left:left + width]
-    graph = image_to_graph(image, 3, np.sqrt(2), 4)
+    graph = image_to_graph(image, 2, 5, 5)
 
     seg_mask = sbm_segmentation(graph, image)
-    colors = graph.new_vertex_property('vector<float>')
-    for idx in np.ndindex(seg_mask.shape[:2]):
-        colors[pixel2node(*idx, image)] = cm.terrain(seg_mask[idx] / np.max(seg_mask))
 
-    positions = graph.new_vertex_property('vector<float>')
-    for node in graph.vertices():
-        positions[node] = reversed(node2pixel(int(node), image))
+    if interactive:
+        colors = graph.new_vertex_property('vector<float>')
+        for idx in np.ndindex(seg_mask.shape[:2]):
+            colors[pixel2node(*idx, image)] = cm.terrain(seg_mask[idx] / np.max(seg_mask))
 
-    graph_tool.draw.graph_draw(graph, pos=positions, vertex_fill_color=colors, vertex_size=5)
+        positions = graph.new_vertex_property('vector<float>')
+        for node in graph.vertices():
+            positions[node] = reversed(node2pixel(int(node), image))
+
+        graph_tool.draw.graph_draw(graph, pos=positions, vertex_fill_color=colors, vertex_size=5)
+    else:
+        plt.imshow(segmentation.mark_boundaries(image, seg_mask, color=[1, 1, 1]))
+        plt.grid(False)
+        plt.xticks([])
+        plt.yticks([])
+        plt.show()
 
 
 def true_segmentation(image_id: str):

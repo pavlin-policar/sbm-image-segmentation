@@ -124,7 +124,7 @@ def sbm_segmentation(graph: gt.Graph, image: np.ndarray) -> np.ndarray:
     )
     blocks = state.get_blocks()
 
-    segmentation = np.zeros(image.shape[:2])
+    segmentation = np.zeros(image.shape[:2], dtype=int)
     for node in graph.vertices():
         segmentation[node2pixel(int(node), image)] = blocks[node]
 
