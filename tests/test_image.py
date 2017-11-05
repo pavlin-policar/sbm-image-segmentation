@@ -3,7 +3,8 @@ import unittest
 import numpy as np
 
 from data_provider import BSDS
-from image import pixel2node, node2pixel, pixel_vec, l2_distance
+from image import pixel2node, node2pixel, pixel_vec, l2_distance, \
+    pixel_similarity
 
 
 class TestImagePixelConversion(unittest.TestCase):
@@ -62,3 +63,44 @@ class TestImageSimilarity(unittest.TestCase):
             dist_similar < dist_different,
             'dist_similar is not smaller than dist different'
         )
+
+    def test_pixel_distance_term(self):
+        # All pixels are the same
+        image = np.zeros((5, 5, 3))
+        similarities = np.zeros((5, 5))
+
+        # Take the central pixel, and compute the distances from there
+        x, y = 2, 2
+
+        for idx in np.ndindex(similarities.shape):
+            similarities[idx] = pixel_similarity((y, x), idx, image, sigma_x=8, sigma_i=1)
+
+        # Manual debugging
+        # np.set_printoptions(precision=3, suppress=True)
+        # print(similarities)
+
+        # Check symmetry
+        # 1 pixel away
+        self.assertTrue(similarities[1, 2] == similarities[3, 2])
+        self.assertTrue(similarities[2, 1] == similarities[2, 3])
+        # 2 pixels away
+        self.assertTrue(similarities[0, 2] == similarities[4, 2])
+        self.assertTrue(similarities[2, 0] == similarities[2, 4])
+
+    def test_pixel_similarity(self):
+        # All pixels are the same
+        image = np.zeros((5, 5, 3))
+        image[2:, :] = [1, 1, 1]
+        similarities = np.zeros((5, 5))
+
+        # Take the central pixel, and compute the distances from there
+        x, y = 2, 2
+
+        for idx in np.ndindex(similarities.shape):
+            similarities[idx] = pixel_similarity((y, x), idx, image, sigma_x=8, sigma_i=1)
+        # Due to indexing going x, y instead of y, x, transpose similarities
+        similarities = similarities.T
+
+        # Manual debugging
+        # np.set_printoptions(precision=3, suppress=True)
+        # print(similarities)

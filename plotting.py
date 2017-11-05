@@ -38,7 +38,7 @@ def image_partition(image_id: str, interactive: bool=False):
     top, left = 100, 200
     height, width = 100, 100
     image = BSDS.load(image_id)[top:top + height, left:left + width]
-    graph = image_to_graph(image, 2, 5, 5)
+    graph = image_to_graph(image, 3, sigma_x=8, sigma_i=.5)
 
     seg_mask = sbm_segmentation(graph, image)
 

@@ -44,6 +44,39 @@ def pixel_vec(y: int, x: int, image: np.ndarray) -> np.ndarray:
     return rgb_to_hsv(*image[y, x])
 
 
+def pixel_similarity(pixel1, pixel2, image, sigma_x, sigma_i):
+    """Compute the similarity between two pixels.
+
+    Parameters
+    ----------
+    pixel1 : Tuple[int, int]
+    pixel2 : Tuple[int, int]
+    image : np.ndarray
+    sigma_x : float
+        User parameter that determines the strength of distance. A lower value
+        induces faster decay i.e. distances will drop off exponentially,
+        whereas a larger values will induce a slower decay.
+    sigma_i : float
+        User parameter that determines the strength of pixel similarity. A
+        lower value induces faster decay i.e. the higher the difference in
+        pixel color, the lower the similarity whereas a larger value will
+        induce a slower decay.
+
+    Returns
+    -------
+    float
+
+    """
+    feature_vec_1 = pixel_vec(*pixel1, image)
+    feature_vec_2 = pixel_vec(*pixel2, image)
+    return (
+        # Distance term
+        np.exp(-l2_distance(pixel1, pixel2) ** 2 / sigma_x ** 2) *
+        # Pixel similarity term
+        np.exp(-l2_distance(feature_vec_1, feature_vec_2) ** 2 / sigma_i ** 2)
+    )
+
+
 def image_to_graph(image, d_max, sigma_x, sigma_i):
     """Convert an image to a weighted graph.
 
@@ -97,11 +130,8 @@ def image_to_graph(image, d_max, sigma_x, sigma_i):
 
                 # Add the edge between the pixels
                 node1, node2 = pixel2node(y, x, image), pixel2node(j, i, image)
-                edges[frozenset((node1, node2))] = (
-                    # Distance term
-                    np.exp(-distance ** 2 / sigma_x ** 2) *
-                    # Pixel similarity term
-                    np.exp(-l2_distance(pixel_vec(y, x, image), pixel_vec(j, i, image)) ** 2 / sigma_i ** 2)
+                edges[frozenset((node1, node2))] = pixel_similarity(
+                    (y, x), (j, i), image, sigma_x=sigma_x, sigma_i=sigma_i
                 )
 
     # Create the corresponding graph object
