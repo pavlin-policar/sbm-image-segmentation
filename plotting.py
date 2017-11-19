@@ -53,14 +53,23 @@ def image_partition(image_id: str, interactive: bool=False):
 
         graph_tool.draw.graph_draw(graph, pos=positions, vertex_fill_color=colors, vertex_size=5)
     else:
-        plt.imshow(segmentation.mark_boundaries(image, seg_mask, color=[1, 1, 1]))
-        plt.grid(False), plt.xticks([]), plt.yticks([])
+        ax = plt.subplot(121)
+        ax.set_title('Original image')
+        ax.imshow(image)
+        ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+        ax = plt.subplot(122)
+        ax.set_title('SBM Segmentation')
+        ax.imshow(segmentation.mark_boundaries(image, seg_mask, color=[1, 1, 1]))
+        ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+        plt.tight_layout()
         plt.show()
 
 
 def true_segmentation(image_id: str):
     image_id = str(image_id)
-    image, seg_mask = BSDS.load(image_id), BSDS.segmentation(image_id)
+    image, seg_mask = BSDS.load(image_id), BSDS.segmentation(image_id)[0]
 
     ax = plt.subplot(121)
     ax.set_title('Original image')
