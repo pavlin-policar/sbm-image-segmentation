@@ -93,5 +93,50 @@ def slic_superpixel(image_id: str):
     plt.show()
 
 
+def segmentation_differences(image_id: str):
+    image_id = str(image_id)
+    image, seg_masks = BSDS.load(image_id), BSDS.segmentation(image_id)
+
+    ax = plt.subplot(331)
+    ax.imshow(image)
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+    ax = plt.subplot(332)
+    ax.imshow(seg_masks[0])
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+    ax = plt.subplot(333)
+    ax.imshow(seg_masks[1])
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+    ax = plt.subplot(334)
+    ax.imshow(seg_masks[2])
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+    ax = plt.subplot(335)
+    ax.imshow(seg_masks[3])
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+    ax = plt.subplot(336)
+    ax.imshow(seg_masks[4])
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+    ax = plt.subplot(337)
+    ax.imshow(seg_masks[5])
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+    ax = plt.subplot(338)
+    ax.imshow(seg_masks[6])
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+    ax = plt.subplot(339)
+    ax.imshow(seg_masks[7])
+    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+
+    plt.tight_layout()
+    plt.savefig('report/images/house_segmentations.png', dpi=400)
+    plt.show()
+
+
 if __name__ == '__main__':
     fire.Fire()
