@@ -10,13 +10,13 @@ from graph_tool import inference
 def pixel2node(i: int, j: int, image: np.ndarray) -> int:
     """Convert pixel indices i, j to a single integer node id."""
     height = image.shape[0]
-    return height * i + j
+    return height * j + i
 
 
 def node2pixel(node: int, image: np.ndarray) -> Tuple[int, int]:
     """Convert a single integer node id to pixel indices i, j."""
     height = image.shape[0]
-    return node // height, node % height
+    return node % height, node // height
 
 
 def l2_distance(vec1: Iterable, vec2: Iterable) -> float:

@@ -11,7 +11,6 @@ from image import image_to_graph, node2pixel, sbm_segmentation, pixel2node
 
 sns.set('paper', 'whitegrid')
 
-
 def image_graph(image_id: str):
     image_id = str(image_id)
     top, left = 100, 200
