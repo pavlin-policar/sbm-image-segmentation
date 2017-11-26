@@ -11,6 +11,7 @@ from image import image_to_graph, node2pixel, sbm_segmentation, pixel2node
 
 sns.set('paper', 'whitegrid')
 
+
 def image_graph(image_id: str):
     image_id = str(image_id)
     top, left = 100, 200
@@ -101,37 +102,10 @@ def segmentation_differences(image_id: str):
     ax.imshow(image)
     ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
 
-    ax = plt.subplot(332)
-    ax.imshow(seg_masks[0])
-    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
-
-    ax = plt.subplot(333)
-    ax.imshow(seg_masks[1])
-    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
-
-    ax = plt.subplot(334)
-    ax.imshow(seg_masks[2])
-    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
-
-    ax = plt.subplot(335)
-    ax.imshow(seg_masks[3])
-    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
-
-    ax = plt.subplot(336)
-    ax.imshow(seg_masks[4])
-    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
-
-    ax = plt.subplot(337)
-    ax.imshow(seg_masks[5])
-    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
-
-    ax = plt.subplot(338)
-    ax.imshow(seg_masks[6])
-    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
-
-    ax = plt.subplot(339)
-    ax.imshow(seg_masks[7])
-    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+    for idx in range(2, 10):
+        ax = plt.subplot(3, 3, idx)
+        ax.imshow(seg_masks[idx - 2])
+        ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
 
     plt.tight_layout()
     plt.savefig('report/images/house_segmentations.png', dpi=400)
