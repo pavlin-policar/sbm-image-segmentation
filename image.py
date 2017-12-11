@@ -148,6 +148,7 @@ def image_to_graph(image, d_max, sigma_x, sigma_i):
 
 
 def sbm_segmentation(graph: gt.Graph, image: np.ndarray) -> np.ndarray:
+    """Use the stochastic block model to obtain a segmentation of the image."""
     state = inference.minimize_blockmodel_dl(
         graph,
         state_args=dict(recs=[graph.ep.weight], rec_types=['real-exponential']),
@@ -159,6 +160,24 @@ def sbm_segmentation(graph: gt.Graph, image: np.ndarray) -> np.ndarray:
         segmentation[node2pixel(int(node), image)] = blocks[node]
 
     return segmentation
+
+
+def hsbm_segmentation(graph: gt.Graph, image: np.ndarray) -> np.ndarray:
+    """Use the hierarchical stochastic block model to obtain multiple
+    segmentations of the image at different levels."""
+    state = inference.minimize_nested_blockmodel_dl(
+        graph,
+        state_args=dict(recs=[graph.ep.weight], rec_types=['real-exponential']),
+    )
+    segmentations = []
+    for level in state.get_levels():
+        blocks = level.get_blocks()
+        segmentation = np.zeros(image.shape[:2], dtype=int)
+        for node in graph.vertices():
+            segmentation[node2pixel(int(node), image)] = blocks[node]
+        segmentations.append(segmentation)
+
+    return segmentations
 
 
 if __name__ == '__main__':
