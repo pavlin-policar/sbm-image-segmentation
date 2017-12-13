@@ -71,35 +71,22 @@ def sbm_partition(image_id: str, interactive: bool=False):
 
 def hsbm_partition(image_id: str):
     image_id = str(image_id)
-    top, left = 200, 50
-    height, width = 20, 20
-    image = BSDS.load(image_id)[top:top + height, left:left + width]
-    # image = BSDS.load(image_id)
+    # top, left = 200, 50
+    # height, width = 80, 80
+    # image = BSDS.load(image_id)[top:top + height, left:left + width]
+    image = BSDS.load(image_id)
     graph = image_to_graph(image, 2, sigma_x=10, sigma_i=20)
 
     seg_masks = hsbm_segmentation(graph, image)
 
-    for idx, seg_mask in enumerate(seg_masks[:4]):
-        ax = plt.subplot(2, 2, idx + 1)
+    for idx, seg_mask in enumerate(seg_masks[:6]):
+        ax = plt.subplot(3, 2, idx + 1)
         ax.imshow(segmentation.mark_boundaries(image, seg_mask, color=[1, 1, 1]))
         ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
 
     plt.tight_layout()
     plt.savefig('report/images/hsbm_koala_segmentation.png', dpi=400)
     plt.show()
-
-    # ax = plt.subplot(121)
-    # ax.set_title('Original image')
-    # ax.imshow(image)
-    # ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
-    #
-    # ax = plt.subplot(122)
-    # ax.set_title('HSBM Segmentation')
-    # ax.imshow(segmentation.mark_boundaries(image, seg_mask, color=[1, 1, 1]))
-    # ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
-    #
-    # plt.tight_layout()
-    # plt.show()
 
 
 def true_segmentation(image_id: str):
