@@ -170,11 +170,23 @@ def hsbm_segmentation(graph: gt.Graph, image: np.ndarray) -> np.ndarray:
         state_args=dict(recs=[graph.ep.weight], rec_types=['real-exponential']),
     )
     segmentations = []
-    for level in state.get_levels():
+
+    # Get the first level segmentation
+    iterator = iter(state.get_levels())
+    bottom_level = next(iterator)
+    blocks = bottom_level.get_blocks()
+    segmentation = np.zeros(image.shape[:2], dtype=int)
+    for node in graph.vertices():
+        segmentation[node2pixel(int(node), image)] = blocks[node]
+    segmentations.append(segmentation)
+
+    # For the further layers, we need to change segmentation mask ids properly
+    for level in iterator:
         blocks = level.get_blocks()
-        segmentation = np.zeros(image.shape[:2], dtype=int)
-        for node in graph.vertices():
-            segmentation[node2pixel(int(node), image)] = blocks[node]
+        segmentation = np.array(segmentations[-1])
+        for mask_id in np.unique(segmentation):
+            new_mask_id = blocks[mask_id]
+            segmentation[segmentation == mask_id] = new_mask_id
         segmentations.append(segmentation)
 
     return segmentations
