@@ -15,23 +15,27 @@ sns.set('paper', 'whitegrid')
 
 def image_graph(image_id: str):
     image_id = str(image_id)
-    # top, left = 100, 200
-    # height, width = 100, 100
-    # image = BSDS.load(image_id)[top:top + height, left:left + width]
-    image = BSDS.load(image_id)
-    graph = image_to_graph(image, 10, 20, 1)
+    top, left = 0, 0
+    height, width = 200, 150
+    image = BSDS.load(image_id)[top:top + height, left:left + width]
+    # image = BSDS.load(image_id)
+    graph = image_to_graph(image, 3, 5, 4)
 
-    colors = graph.new_vertex_property('vector<double>')
-    for node in graph.vertices():
-        colors[node] = image[node2pixel(int(node), image)] / 255
+    # colors = graph.new_vertex_property('vector<double>')
+    # for node in graph.vertices():
+    #     colors[node] = image[node2pixel(int(node), image)] / 255
 
     positions = graph.new_vertex_property('vector<float>')
     for node in graph.vertices():
         positions[node] = reversed(node2pixel(int(node), image))
 
+    # graph_tool.draw.graph_draw(
+    #     graph, pos=positions, vertex_fill_color=colors, vertex_size=3,
+    #     edge_pen_width=graph.ep.weight,
+    # )
+
     graph_tool.draw.graph_draw(
-        graph, pos=positions, vertex_fill_color=colors, vertex_size=3,
-        edge_pen_width=graph.ep.weight,
+        graph, pos=positions, vertex_size=1, edge_pen_width=graph.ep.weight,
     )
 
 
