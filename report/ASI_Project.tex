@@ -1,0 +1,780 @@
+
+%% bare_conf.tex
+%% V1.3
+%% 2007/01/11
+%% by Michael Shell
+%% See:
+%% http://www.michaelshell.org/
+%% for current contact information.
+%%
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 1.7 or later) with an IEEE conference paper.
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
+%% and
+%% http://www.ieee.org/
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE!
+%% User assumes all risk.
+%% In no event shall IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%
+%% File list of work: IEEEtran.cls, IEEEtran_HOWTO.pdf, bare_adv.tex,
+%%                    bare_conf.tex, bare_jrnl.tex, bare_jrnl_compsoc.tex
+%%*************************************************************************
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. IEEE's font choices can trigger bugs that do  ***
+% *** not appear when using other class files.                            ***
+% The testflow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+
+
+% Note that the a4paper option is mainly intended so that authors in
+% countries using A4 can easily print to A4 and see how their papers will
+% look in print - the typesetting of the document will not typically be
+% affected with changes in paper size (but the bottom and side margins will).
+% Use the testflow package mentioned above to verify correct handling of
+% both paper sizes by the user's LaTeX system.
+%
+% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
+% should be used if it is desired that the figures are to be displayed in
+% draft mode.
+%
+\documentclass[conference]{IEEEtran}
+\usepackage{blindtext, graphicx}
+% Add the compsoc option for Computer Society conferences.
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[conference]{../sty/IEEEtran}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[english, slovenian]{babel}
+
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+
+
+
+
+
+% *** CITATION PACKAGES ***
+%
+%\usepackage{cite}
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
+% not currently provide for hyperlinked citations.
+% The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
+% The documentation is contained in the cite.sty file itself.
+
+
+
+
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  % \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
+% epslatex.pdf at: http://www.ctan.org/tex-archive/info/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+
+
+
+% *** MATH PACKAGES ***
+%
+%\usepackage[cmex10]{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics. If using
+% it, be sure to load this package with the cmex10 option to ensure that
+% only type 1 fonts will utilized at all point sizes. Without this option,
+% it is possible that some math symbols, particularly those within
+% footnotes, will be rendered in bitmap form which will result in a
+% document that can not be IEEE Xplore compliant!
+%
+% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
+\usepackage{mathtools}
+
+
+
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
+% There is also a support site at:
+% http://algorithms.berlios.de/index.html
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
+
+
+
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/tools/
+
+
+%\usepackage{mdwmath}
+%\usepackage{mdwtab}
+% Also highly recommended is Mark Wooding's extremely powerful MDW tools,
+% especially mdwmath.sty and mdwtab.sty which are used to format equations
+% and tables, respectively. The MDWtools set is already installed on most
+% LaTeX systems. The lastest version and documentation is available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/mdwtools/
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+%\usepackage{eqparbox}
+% Also of notable interest is Scott Pakin's eqparbox package for creating
+% (automatically sized) equal width boxes - aka "natural width parboxes".
+% Available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/eqparbox/
+
+
+
+
+
+% *** SUBFIGURE PACKAGES ***
+%\usepackage[tight,footnotesize]{subfigure}
+% subfigure.sty was written by Steven Douglas Cochran. This package makes it
+% easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
+% work, it is a good idea to load it with the tight package option to reduce
+% the amount of white space around the subfigures. subfigure.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at:
+% http://www.ctan.org/tex-archive/obsolete/macros/latex/contrib/subfigure/
+% subfigure.sty has been superceeded by subfig.sty.
+
+
+
+%\usepackage[caption=false]{caption}
+%\usepackage[font=footnotesize]{subfig}
+% subfig.sty, also written by Steven Douglas Cochran, is the modern
+% replacement for subfigure.sty. However, subfig.sty requires and
+% automatically loads Axel Sommerfeldt's caption.sty which will override
+% IEEEtran.cls handling of captions and this will result in nonIEEE style
+% figure/table captions. To prevent this problem, be sure and preload
+% caption.sty with its "caption=false" package option. This is will preserve
+% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later
+% (recommended due to many improvements over 1.2) of subfig.sty supports
+% the caption=false option directly:
+%\usepackage[caption=false,font=footnotesize]{subfig}
+%
+% The latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
+% The latest version and documentation of caption.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
+
+
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure. The latest version and documentation can be found at:
+% http://www.ctan.org/tex-archive/macros/latex/base/
+
+
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
+% Documentation is contained in the stfloats.sty comments as well as in the
+% presfull.pdf file. Do not use the stfloats baselinefloat ability as IEEE
+% does not allow \baselineskip to stretch. Authors submitting work to the
+% IEEE should note that IEEE rarely uses double column equations and
+% that authors should try to avoid such use. Do not be tempted to use the
+% cuted.sty or midfloat.sty packages (also by Sigitas Tolusis) as IEEE does
+% not format its papers in such ways.
+
+
+
+
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+%\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/misc/
+% Read the url.sty source comments for usage information. Basically,
+% \url{my_url_here}.
+
+
+
+
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+% paper titleT
+% can use linebreaks \\ within to get better formatting as desired
+\title{Image segmentation using Bayesian stochastic blockmodels}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\author{\IEEEauthorblockN{Pavlin Gregor Poličar}
+\IEEEauthorblockA{University of Ljubljana\\
+Faculty of Computer and Information Science\\
+Email: pavlin.g.p@gmail.com}}
+%\and
+%\IEEEauthorblockN{Homer Simpson}
+%\IEEEauthorblockA{Twentieth Century Fox\\
+%Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\and
+%\IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
+%\IEEEauthorblockA{Starfleet Academy\\
+%San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212\\
+%Fax: (888) 555--1212}}
+
+% conference papers do not typically use \thanks and this command
+% is locked out in conference mode. If really needed, such as for
+% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
+% after \documentclass
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+%
+%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
+%Homer Simpson\IEEEauthorrefmark{2},
+%James Kirk\IEEEauthorrefmark{3},
+%Montgomery Scott\IEEEauthorrefmark{3} and
+%Eldon Tyrell\IEEEauthorrefmark{4}}
+%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
+%Georgia Institute of Technology,
+%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
+%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212, Fax: (888) 555--1212}
+%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+
+
+% make the title area
+\maketitle
+
+
+\begin{abstract}
+%\boldmath
+Image segmentation is a very broad field that combines methods from various areas of expertise. Graph-based techniques achieved some early successes in this field and are still in use today. However, community detection techniques have progressed significantly over the past few years, although none have been applied to this problem until quite recently, where the Louvain modularity optimization method was applied and appeared to achieve reasonable results. However, modularity optimization is just one of numerous community detection algorithms developed in recent years. This raises the question: how well would other more recent community detection algorithms perform for image segmentation? In this work we examine the most recent developments in Bayesian stochastic blockmodeling and attempt to apply them to images. We examine the difficulties that arise and possible solutions. Our results indicate that stochastic blockmodels and its variants are not a viable method for image segmentation and discuss the reasons why most community detection algorithms would perform poorly.
+\end{abstract}
+% IEEEtran.cls defaults to using nonbold math in the Abstract.
+% This preserves the distinction between vectors and scalars. However,
+% if the journal you are submitting to favors bold math in the abstract,
+% then you can use LaTeX's standard command \boldmath at the very start
+% of the abstract to achieve this. Many IEEE journals frown on math
+% in the abstract anyway.
+
+% Note that keywords are not normally used for peerreview papers.
+%\begin{IEEEkeywords}
+%image segmentation, community detection.
+%\end{IEEEkeywords}
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+%\IEEEpeerreviewmaketitle
+
+
+
+\section{Introduction}
+% Intro into segmentation
+The problems of image segmentation and perceptual grouping remain one of the most popular challenges in computer vision today. Image segmentation is the process of partitioning an image into multiple segments, usually corresponding to different objects or regions present in the image. Intuitively, a good segment is a subset of pixels in the image, which are spatially close to each other and are fairly uniform with regards to color and brightness.
+
+% Problems with segmentation
+However, one can never be sure what a "good" segmentation truly is, since image segmentation is an inherently hierarchical task. Therefore no true segmentation exists, since it can be defined on multiple levels of granularity. Instead of finding the \textit{correct} answer, we should strive to find a \textit{useful} answer in the context of our application. Figure \ref{fig:house_segmentations} shows the disagreement between human annotators to highlight these differences. If human experts cannot agree on a \textit{correct} segmentation, what hope does an algorithm have? Ideally, we could design a method that would produce a hierarchy of segments in an image at different granularities, but we quickly run into computation challenges. Therefore any low-level segmentation technique cannot and should not strive to produce a correct segmentation, but should produce a useful segmentation in the context of our application.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{images/house_segmentations.png}
+    \caption{Human annotators produce different segmentations for the same image. The true image is shown in the top left, and eight possible annotations are shown. Clearly, no one single segmentation is the "correct" answer -- different segmentations are possible at different granularities. The image and segmentations can be found in the Berkley segmentation benchmark dataset under the id 254054.}
+    \label{fig:house_segmentations}
+\end{figure}
+
+% Graph based segmentation
+Graph-based techniques have proved to be quite effective for this task, most notably -- the normalized cut algorithm and its variants proposed in 2000~\cite{shi2000normalized} are still some of the most widely used methods today due to their simplicity and computation efficiency. These methods and other graph-flow based methods have proven to be quite useful in this domain.
+
+% Community detection algorithms
+In recent years, much attention has been given to community detection and the implementation of efficient algorithms in the field of network science. Some of the most notable such algorithms are greedy modularity optimization~\cite{clauset2004finding}, random walk based algorithms e.g. Infomap~\cite{rosvall2008maps} and stochastic blockmodels~\cite{holland1983stochastic}. All of these algorithms have their drawbacks, in some way or another.  Both greedy optimization and infomap are discriminative methods, which partition graph nodes into communities. Stochastic blockmodels are a generative model and are more closely described in Section \ref{sbm}. For a long time, the main drawback of stochastic blockmodels is that the number of blocks or communities had to be known in advance. However, recent work by Peixoto~\cite{peixoto2017nonparametric} do away with this limitation by posing the problem in a Bayesian framework.
+
+All of the three methods could be useful in the context of image segmentation due to the fact that they can produce hierarchical partitions. However, since the focus of this paper is the application of stochastic blockmodels, we limit ourselves these models and their nested variants~\cite{peixoto2014hierarchical}.
+
+% Paper organization
+This paper is organized as follows. In Section \ref{related_work}, we describe how image segmentation can be posed as a graph-based problem. We then shift our focus onto a recent paper by Browet et al.~\cite{browet2011community} who propose an image segmentation scheme based on a modified greedy modularity optimization method. In Section \ref{sbm} we provide an overview of the stochastic blockmodel and recent developments. Finally, in Section \ref{results}, we show some experimental results on real images. Finally, Section \ref{conclusion} concludes the paper and discusses suggestions for future work.
+
+
+\section{Related work}\label{related_work}
+
+% Overview of SoTA in image segmentation
+
+% Image segmentation as a graph problem
+\subsection{Image segmentation as a graph problem}\label{image_to_graph}
+
+Before we can apply graph-based methods for image segmentation, the image itself must be represented as a graph. This is typically done by building an undirected weighted graph $G$, where each node represents a pixel in the input image. Each weighted edge of the graph $G$ represents the similarity between pairs of pixels $i$ and $j$ and is stored in the weighted adjacency matrix $W$. Typically, we define $W_{ij}$ as
+\begin{equation}
+    W_{ij} = \left \{ \begin{matrix*}[l]
+    e^{ \frac{d(i, j)^2}{\sigma_d^2} } e^{ \frac{\left \vert F(i) - F(j) \right \vert^2}{\sigma_F^2} } & \text{if } d(i, j) < d_{\text{max}}\text{,} \\
+    0 & \text{otherwise}
+    \end{matrix*}\right.
+\end{equation}
+
+where the term $d(i, j)$ represents spatial proximity using some distance metric between pixels $i$ and $j$ (most commonly the Euclidean distance) and $F(i)$ is some feature vector based on the properties of the pixel. This feature vector is typically the scalar intensity of the pixel for gray-scale images or the HSV transform for colored images~\cite{browet2011community}. $d_{\text{max}}$ specifies an upper bound on pixels that we will consider based on their spatial proximity to the pixel in question. This parameter is necessary due to practical considerations, since the total number of connections between pixels is $n^2$, which is, in practical regards, computationally unfeasible, therefore it is necessary to restrict ourselves to some region around individual pixels. To illustrate this, we can consider a small image by today's standards, a $480 \times 320$ image. This image contains 153,600 pixels in total and were we to connect every single pixel to one another, this would result in 23,592,960,000 edges. This not only has computer memory implications but will also impact the running time of our algorithms. The last two parameters $\sigma_d$ and $\sigma_F$ are user-defined parameters that control the impact of pixel distances and pixel similarities in the edge weight. A lower value of $\sigma_d$ induces faster decay i.e. distances will drop off exponentially, whereas larger values will induce a slower decay. Likewise, a lower value of $\sigma_F$ induces faster decay i.e. the higher the difference in pixel features, the lower the similarity. An illustration of an image being represented as a graph by following this simple conversion method is shown in Figure \ref{fig:koala_graph}. The original image of the koala bear hugging a tree branch will be shown later multiple times.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{images/koala_graph.png}
+    \caption{We convert an image of a koala bear hugging a tree branch into a graph using the method described above. The image consists of graph edges whose thickness is determined be the edge weight. We can clearly see tightly connected regions of the image by dark areas, whereas the image edges are clearly visible due to the absence of thick edges.}
+    \label{fig:koala_graph}
+\end{figure}
+
+This is not a new approach. In fact, it was first proposed (to the best of our knowledge) in 2000 by Shi \& Malik alongside normalized cuts. Normalized cuts attempt to find such a set of edges that creates disconnected components when removed from the graph, such that the sum of the weighted edges is minimal. These methods are typically referred to as \textit{cuts}~\cite{shi2000normalized}. These methods produce good results and are still in use today.
+
+% Paper on modularity overview
+\subsection{Community detection for image segmentation}
+Normalized cuts and most previous graph-based methods utilize flow optimization techniques. More recently, community detection algorithms have been tested for the image segmentation task. Browet et al. propose a variant of the Louvain method for greedy modularity optimization. The tests were performed on the Berkley segmentation benchmark dataset (BSDS)~\cite{MartinFTM01} and appears to work reasonably well.
+
+They show that the standard greedy modularity optimization approach typically used for community detection produces coherent regions, but most objects in the images are oversegmented. They argue that this oversegmentation is due to the fact that modularity optimization algorithms cannot yield communities with long chains of nodes. They propose two solutions to tackle this problem. Firstly, increasing $d_{\text{max}}$ is the theoretically sound solution, but is often, as previously discussed, unfeasible for all but the smallest images. The second remedy, which they then implement is to modify the null model used in modularity. We next describe their approach.
+
+Modularity is a well-studied measure of community goodness~\cite{newman2004finding}. It provides a nice trade-off between the edges actually observed in the graph and the number of edges we would expect to appear at random given a random null model. The basic expression for the modularity measure for weighted networks is given in Equation \ref{eq:modularity}.
+\begin{equation}
+    Q = \frac{1}{2m}\sum_{i, j = 1}^{n}\left ( w_{ij} - N_{ij} \right ) \delta_{C_i C_j}
+    \label{eq:modularity}
+\end{equation}
+
+where $n$ is the number of nodes, $w_{ij}$ is the edge weight,  $\delta_{C_i C_j}$ is the Kronecker delta function and $N_{ij}$ is the expected number of edges we would expect to appear at random in a configuration model between nodes $i$ and $j$ and is defined as $N_{ij} = \frac{k_i k_j}{2m}$, where $k_i$ is the sum of the weights of all edges of node $i$. In this case, $m$ is the sum of weights of all the edges in the graph and is a scaling parameter ensuring that $Q \in \left [ -1, 1 \right ]$.
+
+They then propose a modified version of modularity, which enables regions to cover large portions of the graph. More precisely, they introduce a weight matrix $\Lambda$, with which they modify the null model $N_{ij} = \Lambda_{ij} \frac{k_i k_j}{2m}$, where
+
+\begin{equation}
+    \Lambda_{ij} = \left \{ \begin{matrix*}[l]
+    1 & \text{if } d(i, j) \leq d_{\Lambda}\text{,} \\
+    0 & \text{otherwise}
+    \end{matrix*}\right.
+\end{equation}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{images/modularity_baby.png}
+    \caption{Image segmentation using the Louvain greedy modularity optimization method (center) produces an oversegmented image. Browet et al.~\cite{browet2011community} propose a modified modularity measure which empirically allows communities to cover larger regions of the network (right).}
+    \label{fig:modularity_baby}
+\end{figure}
+
+This modified version of modularity appears to produce reasonable results, shown in Figure \ref{fig:modularity_baby}. However, the method is never actually benchmarked to other image segmentation techniques and no score is provided~\cite{browet2011community}, therefore we cannot know how well it compares to other state of the art image segmentation techniques.
+
+\section{Stochastic blockmodels}\label{sbm}
+The stochastic blockmodel (SBM)~\cite{holland1983stochastic} is a generative model for community detection, which makes use of the statistical properties of the network to infer the high level modular structure. In its most basic form, the model assigns each node $i$ to one of $K$ modules denoted by $z_i$. Each edge exists with probability $\Theta_{z_i z_j}$ where $\Theta$ is a $K \times K$ matrix which values are the probabilities of links appearing between blocks $z_i$ and $z_j$.
+
+SBMs are interesting from another standpoint. Most community detection algorithms rely on the assumption that communities are subsets of nodes in the network that tend to form edges with nodes in the same community. This is known as assortative mixing. A nice property of SBMs is that they are not limited to this kind of connectivity because they only observe the statistical properties of the network. Therefore they can easily detect other types of structure in the network such as disassortative mixing and core-periphery structure under the same inference framework.
+
+A fundamental limitation of the classical SBM is that they are defined strictly for simple graphs or multigraphs. This means that they cannot make use of various additional data such as edge weights, which are usually a very rich source of information. Moreover, in the case of image segmentation, the number of blocks $K$ must be known in advance. This clearly does not fit into a general framework for detecting regions of interest in images.
+
+The first aforementioned issue was addressed by Aicher et al.~\cite{aicher2014learning}, who generalized the SBM to include edge weights drawn from any exponential family distribution  as additional covariates. The inference model also learns from the presence and absence of edges. This allows the model to make use of information that would otherwise be discarded when using previous techniques such as simple thresholding.
+
+The second issue was just recently addressed by Peixoto~\cite{peixoto2017nonparametric}, who built on the ideas of Aicher et al. and produce a nonparametric Bayesian approach, which is capable of probabilistically inferring the number of blocks in the model. The model relies on a Bayesian hierarchy of uninformative hyperpriors that remain agnostic of the number of groups, the sizes of the groups and the partition of the nodes. A very detailed derivation of this model is given in~\cite{peixoto2017bayesian}. Peixoto shows that this nonparametric model is capable of correctly recovering community structure from various empirical networks. The inference step used is very efficient, making use of Markov Chain Monte Carlo (MCMC) sampling, that requires only $O(E)$ operations per sweep, where $E$ is the number of edges in the network.
+
+SBMs can recover the flat community structure of networks i.e. they provide the most probable  partition of the nodes. At the same time, we would often be equally or more interested in the higher level overview of the network structure -- how these observed communities interact with each other. In other words, we would be interested in the hierarchical decomposition of the network, observing different partitions of nodes at each level of the hierarchy.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{images/nested_blockmodel.png}
+    \caption{Example of a nested stochastic block model with three levels, and a generated network at the bottom. The top-level structure describes a core-periphery network, which is further subdivided in the lower levels.}
+    \label{fig:nested_blockmodel}
+\end{figure}
+
+The nested stochastic blockmodel is an extension to the basic SBM that enables precisely this. The basic idea of the nested SBM is illustrated in Figure \ref{fig:nested_blockmodel}~\cite{peixoto2014hierarchical}. The idea is simple, recursively apply the SBM to the network, and then merge nodes in the same blocks until no more statistically significant block structure can be recovered.
+
+\section{Results}\label{results}
+
+We first apply the SBM to graphs obtained from images as described in Section \ref{image_to_graph}. The segmentations are shown in Figures \ref{fig:sbm_seg_firenze} and \ref{fig:sbm_seg_koala}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{images/sbm_firenze.png}
+    \caption{Image segmentation using a nonparametric SBM produces an overly segmented image. The image can be found in BSDS under the id 24004.}
+    \label{fig:sbm_seg_firenze}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{images/sbm_koala.png}
+    \caption{Another example using the nonparametric SBM. Again, the results show an overly segmented image. The image can be found in BSDS under the id 69015.}
+    \label{fig:sbm_seg_koala}
+\end{figure}
+
+Clearly, SBMs suffer from a similar drawback as the one discussed in the Louvain modularity optimization problem. A good community is defined as partitions of the graph where edges among nodes are more likely than edges outside of the community. This fundamental definition inherently contradicts our graph-building process, with which we are forced to limit the number of edges we add to the graph. As such, most community optimization algorithms will struggle to find good communities and will produce similar results to what we observe with the SBM. While the regions it finds are reasonable, they are far too oversegmented to be useful in any context. The results of the SBM remind of another useful computer vision technique called superpixel -- a preprocessing step which groups together similar regions in an image to make computation simpler. However, even though the SBM produces similar results, it is computationally far more expensive, and should not be considered as a substitute.
+
+We also consider several different values for the user parameters which regulate the strength of distance and pixel similarities as edge weights. We found that no setting of these parameters drastically improves the results.
+
+Next, we consider the nested SBM. The results are shown in Figures \ref{fig:sbm_hseg_firenze} and \ref{fig:sbm_hseg_koala}. Again, we see that this produces overly segmented images even at higher levels of the hierarchy. We make two surprising observations.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{images/hsbm_florence_segmentation.png}
+    \caption{The segmentations obtained from the nested SBM. We display the original image, the first, third and fifth level of the hierarchy, respectively.}
+    \label{fig:sbm_hseg_firenze}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{images/hsbm_koala_segmentation.png}
+    \caption{Another segmentations obtained from the nested SBM. We display the original image, the first, third and fifth level of the hierarchy, respectively. We observe that some of the segments are reasonable, others contain edges and sections that we would not group together.}
+    \label{fig:sbm_hseg_koala}
+\end{figure}
+
+Firstly, at higher levels of the hierarchy the nested SBM begins to merge together blocks which would not be considered good segments. This can be seen in a number of segments which cross apparent edges in the image e.g. in Figure \ref{fig:sbm_hseg_koala} at the fifth level of the hierarchy, the koalas foot and branch are contained within the same segment. At higher levels of the hierarchy these differences become even more apparent, and are not included here for the sake of space. This problem is most likely caused by the fact that we include only a small number of edges for each pixel, and the model cannot detect meaningful blocks given this substantial lack of information. The other possible explanation for this could be that we did not stumble upon a good setting of parameters when converting the image to a graph (despite testing several parameter configurations).
+
+Our second observation is that the segmentation obtained from the observed network, i.e. the first level of the hierarchy is far more segmented than the one obtained from the basic SBM. A comparable segmentation is only obtained at the fourth or fifth level of the hierarchy. We speculate that this could be due to the nested SBM being more forgiving in the model selection process, since the nested SBM has more flexibility given multiple levels. The basic SBM does not have this luxury and must provide a good partition straight away.
+
+\section{Conclusion}\label{conclusion}
+
+In the presented work, we explore stochastic blockmodels and the nested variant for the task of image segmentation. We show that these are not suitable approaches for image segmentation and discuss some of the issues that arise when attempting to apply community detection algorithms to this particular task. A possible application in computer vision for SBMs and other community detection methods would be \textit{superpixel}, a preprocessing technique that finds groups of similar pixels in close spatial proximity and groups them together in order to reduce the dimensionality of the image. However, the field of computer vision has already produced far more efficient methods for extracting these superpixels that run in linear time. Our SBM approach, does not and should therefore not be considered for this task since the produced results are not any better than those of established methods.
+
+Another issue with this approach is parameter selection to induce the initial graph from the image. We have found no straightforward way to select the most appropriate parameters and they often differ from image to image.
+
+Community detection algorithms are not well suited to this particular domain due to various issues discussed in this paper. A possible extension to this work would be to test community detection methods on preprocessed images with superpixel techniques mentioned above. However, this is likely to produce results comparable to the nested SBM.
+
+% needed in second column of first page if using \IEEEpubid
+%\IEEEpubidadjcol
+
+% An example of a floating figure using the graphicx package.
+% Note that \label must occur AFTER (or within) \caption.
+% For figures, \caption should occur after the \includegraphics.
+% Note that IEEEtran v1.7 and later has special internal code that
+% is designed to preserve the operation of \label within \caption
+% even when the captionsoff option is in effect. However, because
+% of issues like this, it may be the safest practice to put all your
+% \label just after \caption rather than within \caption{}.
+%
+% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
+% option should be used if it is desired that the figures are to be
+% displayed while in draft mode.
+%
+%\begin{figure}[!t]
+%\centering
+%\includegraphics[width=2.5in]{myfigure}
+% where an .eps filename suffix will be assumed under latex,
+% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+% via \DeclareGraphicsExtensions.
+%\caption{Simulation Results}
+%\label{fig_sim}
+%\end{figure}
+
+% Note that IEEE typically puts floats only at the top, even when this
+% results in a large percentage of a column being occupied by floats.
+
+
+% An example of a double column floating figure using two subfigures.
+% (The subfig.sty package must be loaded for this to work.)
+% The subfigure \label commands are set within each subfloat command, the
+% \label for the overall figure must come after \caption.
+% \hfil must be used as a separator to get equal spacing.
+% The subfigure.sty package works much the same way, except \subfigure is
+% used instead of \subfloat.
+%
+%\begin{figure*}[!t]
+%\centerline{\subfloat[Case I]\includegraphics[width=2.5in]{subfigcase1}%
+%\label{fig_first_case}}
+%\hfil
+%\subfloat[Case II]{\includegraphics[width=2.5in]{subfigcase2}%
+%\label{fig_second_case}}}
+%\caption{Simulation results}
+%\label{fig_sim}
+%\end{figure*}
+%
+% Note that often IEEE papers with subfigures do not employ subfigure
+% captions (using the optional argument to \subfloat), but instead will
+% reference/describe all of them (a), (b), etc., within the main caption.
+
+
+% An example of a floating table. Note that, for IEEE style tables, the
+% \caption command should come BEFORE the table. Table text will default to
+% \footnotesize as IEEE normally uses this smaller font for tables.
+% The \label must come after \caption as always.
+%
+%\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+%\caption{An Example of a Table}
+%\label{table_example}
+%\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+%\begin{tabular}{|c||c|}
+%\hline
+%One & Two\\
+%\hline
+%Three & Four\\
+%\hline
+%\end{tabular}
+%\end{table}
+
+
+% Note that IEEE does not put floats in the very first column - or typically
+% anywhere on the first page for that matter. Also, in-text middle ("here")
+% positioning is not used. Most IEEE journals use top floats exclusively.
+% Note that, LaTeX2e, unlike IEEE journals, places footnotes above bottom
+% floats. This can be corrected via the \fnbelowfloat command of the
+% stfloats package.
+
+
+
+
+
+% if have a single appendix:
+%\appendix[Empirical results]
+% or
+%\appendix  % for no appendix heading
+% do not use \section anymore after \appendix, only \section*
+% is possibly needed
+
+% use appendices with more than one appendix
+% then use \section to start each appendix
+% you must declare a \section before using any
+% \subsection or using \label (\appendices by itself
+% starts a section numbered zero.)
+%
+
+
+%\appendices
+%\section{Proof of the First Zonklar Equation}
+%\blindtext
+
+% use section* for acknowledgement
+%\section*{Acknowledgment}
+
+
+%The authors would like to thank...
+
+
+% Can use something like this to put references on a page
+% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+\bibliographystyle{ieeetr}
+\bibliography{references}
+
+% biography section
+%
+% If you have an EPS/PDF photo (graphicx package needed) extra braces are
+% needed around the contents of the optional argument to biography to prevent
+% the LaTeX parser from getting confused when it sees the complicated
+% \includegraphics command within an optional argument. (You could create
+% your own custom macro containing the \includegraphics command to make things
+% simpler here.)
+%\begin{biography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
+% or if you just want to reserve a space for a photo:
+
+%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{picture}}]{John Doe}
+%\blindtext
+%\end{IEEEbiography}
+
+% You can push biographies down or up by placing
+% a \vfill before or after them. The appropriate
+% use of \vfill depends on what kind of text is
+% on the last page and whether or not the columns
+% are being equalized.
+
+%\vfill
+
+% Can be used to pull up biographies so that the bottom of the last one
+% is flush with the other column.
+%\enlargethispage{-5in}
+
+
+
+
+% that's all folks
+\end{document}
+
+
