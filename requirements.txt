@@ -1,0 +1,5 @@
+scikit-image
+matplotlib
+seaborn
+jupyter
+fire
