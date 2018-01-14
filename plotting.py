@@ -25,27 +25,31 @@ def _read_image(image_id: str) -> np.ndarray:
     return image
 
 
-def image_graph(image_id: str):
+def image_graph(image_id: str, d_max=1.5, sigma_x=10, sigma_i=3, color=False):
     image = _read_image(image_id)
 
-    graph = image_to_graph(image, 3, 5, 4)
-
-    # colors = graph.new_vertex_property('vector<double>')
-    # for node in graph.vertices():
-    #     colors[node] = image[node2pixel(int(node), image)] / 255
+    graph = image_to_graph(image, d_max=d_max, sigma_x=sigma_x, sigma_i=sigma_i)
 
     positions = graph.new_vertex_property('vector<float>')
     for node in graph.vertices():
         positions[node] = reversed(node2pixel(int(node), image))
 
-    # graph_tool.draw.graph_draw(
-    #     graph, pos=positions, vertex_fill_color=colors, vertex_size=3,
-    #     edge_pen_width=graph.ep.weight,
-    # )
+    if color:
+        colors = graph.new_vertex_property('vector<double>')
+        for node in graph.vertices():
+            colors[node] = image[node2pixel(int(node), image)] / 255
 
-    graph_tool.draw.graph_draw(
-        graph, pos=positions, vertex_size=1, edge_pen_width=graph.ep.weight,
-    )
+        graph_tool.draw.graph_draw(
+            graph, pos=positions, vertex_fill_color=colors, vertex_size=1,
+            edge_pen_width=graph.ep.weight,
+            output='poster/koala_graph_color.png', output_size=image.shape,
+        )
+    else:
+        graph_tool.draw.graph_draw(
+            graph, pos=positions, vertex_size=0,
+            edge_pen_width=graph.ep.weight,
+            output='poster/koala_graph.png', output_size=image.shape,
+        )
 
 
 def sbm_partition(image_id: str, interactive: bool=False):
