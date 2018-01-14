@@ -13,12 +13,21 @@ from image import image_to_graph, node2pixel, sbm_segmentation, pixel2node, \
 sns.set('paper', 'whitegrid')
 
 
-def image_graph(image_id: str):
+def _read_image(image_id: str) -> np.ndarray:
     image_id = str(image_id)
-    top, left = 0, 0
-    height, width = 200, 150
-    image = BSDS.load(image_id)[top:top + height, left:left + width]
-    # image = BSDS.load(image_id)
+    try:
+        image = BSDS.load(image_id)
+
+    # An assertion error is thrown if the image id is not found
+    except AssertionError:
+        image = plt.imread(image_id)
+
+    return image
+
+
+def image_graph(image_id: str):
+    image = _read_image(image_id)
+
     graph = image_to_graph(image, 3, 5, 4)
 
     # colors = graph.new_vertex_property('vector<double>')
@@ -40,11 +49,7 @@ def image_graph(image_id: str):
 
 
 def sbm_partition(image_id: str, interactive: bool=False):
-    image_id = str(image_id)
-    # top, left = 200, 300
-    # height, width = 80, 100
-    # image = BSDS.load(image_id)[top:top + height, left:left + width]
-    image = BSDS.load(image_id)
+    image = _read_image(image_id)
     graph = image_to_graph(image, 2, sigma_x=10, sigma_i=20)
 
     seg_mask = sbm_segmentation(graph, image)
@@ -75,11 +80,7 @@ def sbm_partition(image_id: str, interactive: bool=False):
 
 
 def hsbm_partition(image_id: str):
-    image_id = str(image_id)
-    # top, left = 200, 50
-    # height, width = 20, 20
-    # image = BSDS.load(image_id)[top:top + height, left:left + width]
-    image = BSDS.load(image_id)
+    image = _read_image(image_id)
     graph = image_to_graph(image, 2, sigma_x=10, sigma_i=20)
 
     seg_masks = hsbm_segmentation(graph, image)
