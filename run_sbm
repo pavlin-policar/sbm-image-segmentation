@@ -7,7 +7,7 @@ sigma_i=( 4 );
 for d in ${d_max[@]}; do
 	for sx in ${sigma_x[@]}; do
 		for si in ${sigma_i[@]}; do
-			docker run -it -d --rm -v /home/ppolicar/nfs/sbm-image-segmentation:/sbm -w /sbm sbm python plotting.py sbm-partition data/koala_cropped.png --blur 2 --d-max $d --sigma-x $sx --sigma-i $si
+			docker run -it -d --rm -v /home/ppolicar/nfs/sbm-image-segmentation:/sbm -w /sbm sbm python plotting.py sbm-partition data/koala_cropped.jpg --blur 2 --d-max $d --sigma-x $sx --sigma-i $si
 		done
 	done
 done

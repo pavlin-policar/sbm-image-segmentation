@@ -2,5 +2,5 @@
 
 gauss=( 1 2 4 6 );
 for g in ${gauss[@]}; do
-	docker run -it -d --rm -v /home/ppolicar/nfs/sbm-image-segmentation:/sbm -w /sbm sbm python plotting.py image-graph data/koala_cropped.png --blur $g
+	docker run -it -d --rm -v /home/ppolicar/nfs/sbm-image-segmentation:/sbm -w /sbm sbm python plotting.py image-graph data/koala_cropped.jpg --blur $g
 done
