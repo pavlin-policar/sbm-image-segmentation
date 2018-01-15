@@ -1,8 +1,8 @@
 #!/bin/bash
 
-d_max=( 2 4 6 8 10 );
-sigma_x=( 5 );
-sigma_i=( 4 );
+d_max=( 6 8 10 );
+sigma_x=( 7 10 );
+sigma_i=( 3 6 );
 
 for d in ${d_max[@]}; do
 	for sx in ${sigma_x[@]}; do
