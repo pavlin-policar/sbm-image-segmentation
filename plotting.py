@@ -1,16 +1,15 @@
+from typing import Optional
+
 import fire
+import graph_tool.draw
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-import matplotlib.cm as cm
-from scipy.ndimage import morphology, filters
+from scipy.ndimage import filters
 from skimage import segmentation
 
-import graph_tool.draw
-from typing import Optional
-
 from data_provider import BSDS
-from image import image_to_graph, node2pixel, sbm_segmentation, pixel2node, \
+from image import image_to_graph, node2pixel, sbm_segmentation, \
     hsbm_segmentation
 
 sns.set('paper', 'whitegrid')
