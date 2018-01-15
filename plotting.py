@@ -28,9 +28,9 @@ def _read_image(image_id: str) -> np.ndarray:
     return image
 
 
-def image_graph(image_id: str, d_max: float = 1.5, sigma_x: float = 10,
-                sigma_i: float = 3, color: bool = False,
-                blur: Optional[float] = None):
+def image_graph(
+        image_id: str, d_max: float=1.5, sigma_x: float=10, sigma_i: float=3,
+        color: bool=False, blur: Optional[float]=None):
 
     image = _read_image(image_id)
 
@@ -43,7 +43,7 @@ def image_graph(image_id: str, d_max: float = 1.5, sigma_x: float = 10,
     for node in graph.vertices():
         positions[node] = reversed(node2pixel(int(node), image))
 
-    fname = 'poster/koala'
+    fname = 'poster/koala_dmax_%d_sx_%d_si%d' % (d_max, sigma_x, sigma_i)
     if blur is not None:
         fname += '_gauss_%d' % int(blur)
     if color:
@@ -68,23 +68,25 @@ def image_graph(image_id: str, d_max: float = 1.5, sigma_x: float = 10,
         )
 
 
-def sbm_partition(image_id: str, interactive: bool=False):
+def sbm_partition(
+        image_id: str, d_max: float=1.5, sigma_x: float=10, sigma_i: float=3,
+        blur: Optional[float]=None, show_original: bool=False):
+
     image = _read_image(image_id)
-    graph = image_to_graph(image, 2, sigma_x=10, sigma_i=20)
+
+    if blur is not None:
+        image = filters.gaussian_filter(image, sigma=blur)
+
+    graph = image_to_graph(image, d_max=d_max, sigma_x=sigma_x, sigma_i=sigma_i)
 
     seg_mask = sbm_segmentation(graph, image)
 
-    if interactive:
-        colors = graph.new_vertex_property('vector<float>')
-        for idx in np.ndindex(seg_mask.shape[:2]):
-            colors[pixel2node(*idx, image)] = cm.terrain(seg_mask[idx] / np.max(seg_mask))
+    fname = 'poster/koala_seg_dmax_%d_sx_%d_si%d' % (d_max, sigma_x, sigma_i)
+    if blur is not None:
+        fname += '_gauss_%d' % int(blur)
+    fname += '.png'
 
-        positions = graph.new_vertex_property('vector<float>')
-        for node in graph.vertices():
-            positions[node] = reversed(node2pixel(int(node), image))
-
-        graph_tool.draw.graph_draw(graph, pos=positions, vertex_fill_color=colors, vertex_size=5)
-    else:
+    if show_original:
         ax = plt.subplot(121)
         ax.set_title('Original image')
         ax.imshow(image)
@@ -96,7 +98,10 @@ def sbm_partition(image_id: str, interactive: bool=False):
         ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
 
         plt.tight_layout()
-        plt.show()
+        plt.savefig(fname, dpi=1000)
+    else:
+        plt.imshow(segmentation.mark_boundaries(image, seg_mask, color=[1, 1, 1]))
+        plt.savefig(fname, dpi=1000)
 
 
 def hsbm_partition(image_id: str):
