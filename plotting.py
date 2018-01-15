@@ -43,7 +43,7 @@ def image_graph(
     for node in graph.vertices():
         positions[node] = reversed(node2pixel(int(node), image))
 
-    fname = 'poster/koala_dmax_%d_sx_%d_si%d' % (d_max, sigma_x, sigma_i)
+    fname = 'poster/koala_dmax_%d_sx_%d_si_%d' % (d_max, sigma_x, sigma_i)
     if blur is not None:
         fname += '_gauss_%d' % int(blur)
     if color:
@@ -81,7 +81,7 @@ def sbm_partition(
 
     seg_mask = sbm_segmentation(graph, image)
 
-    fname = 'poster/koala_seg_dmax_%d_sx_%d_si%d' % (d_max, sigma_x, sigma_i)
+    fname = 'poster/koala_seg_dmax_%d_sx_%d_si_%d' % (d_max, sigma_x, sigma_i)
     if blur is not None:
         fname += '_gauss_%d' % int(blur)
     fname += '.png'
