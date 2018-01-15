@@ -3,9 +3,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import matplotlib.cm as cm
+from scipy.ndimage import morphology, filters
 from skimage import segmentation
 
 import graph_tool.draw
+from typing import Optional
+
 from data_provider import BSDS
 from image import image_to_graph, node2pixel, sbm_segmentation, pixel2node, \
     hsbm_segmentation
@@ -25,14 +28,27 @@ def _read_image(image_id: str) -> np.ndarray:
     return image
 
 
-def image_graph(image_id: str, d_max=1.5, sigma_x=10, sigma_i=3, color=False):
+def image_graph(image_id: str, d_max: float = 1.5, sigma_x: float = 10,
+                sigma_i: float = 3, color: bool = False,
+                blur: Optional[float] = None):
+
     image = _read_image(image_id)
+
+    if blur is not None:
+        image = filters.gaussian_filter(image, sigma=blur)
 
     graph = image_to_graph(image, d_max=d_max, sigma_x=sigma_x, sigma_i=sigma_i)
 
     positions = graph.new_vertex_property('vector<float>')
     for node in graph.vertices():
         positions[node] = reversed(node2pixel(int(node), image))
+
+    fname = 'poster/koala'
+    if blur is not None:
+        fname += '_gauss_%d' % int(blur)
+    if color:
+        fname += '_color'
+    fname += '.png'
 
     if color:
         colors = graph.new_vertex_property('vector<double>')
@@ -41,14 +57,14 @@ def image_graph(image_id: str, d_max=1.5, sigma_x=10, sigma_i=3, color=False):
 
         graph_tool.draw.graph_draw(
             graph, pos=positions, vertex_fill_color=colors, vertex_size=1,
-            edge_pen_width=graph.ep.weight,
-            output='poster/koala_graph_color.png', output_size=image.shape,
+            edge_pen_width=graph.ep.weight, output=fname,
+            output_size=image.shape,
         )
     else:
         graph_tool.draw.graph_draw(
             graph, pos=positions, vertex_size=0,
-            edge_pen_width=graph.ep.weight,
-            output='poster/koala_graph.png', output_size=image.shape,
+            edge_pen_width=graph.ep.weight, output=fname,
+            output_size=image.shape,
         )
 
 
