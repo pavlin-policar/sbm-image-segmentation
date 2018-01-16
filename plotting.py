@@ -4,15 +4,15 @@ import fire
 import graph_tool.draw
 import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
+# import seaborn as sns
 from scipy.ndimage import filters
-from skimage import segmentation
+from skimage import segmentation, transform
 
 from data_provider import BSDS
 from image import image_to_graph, node2pixel, sbm_segmentation, \
     hsbm_segmentation
 
-sns.set('paper', 'whitegrid')
+# sns.set('paper', 'whitegrid')
 
 
 def _read_image(image_id: str) -> np.ndarray:
@@ -31,12 +31,13 @@ def image_graph(
         image_id: str, d_max: float=1.5, sigma_x: float=10, sigma_i: float=3,
         color: bool=False, blur: Optional[float]=None):
 
-    image = _read_image(image_id)
+    image = _read_image(image_id)[:200, :200]
 
     if blur is not None:
         image = filters.gaussian_filter(image, sigma=blur)
 
     graph = image_to_graph(image, d_max=d_max, sigma_x=sigma_x, sigma_i=sigma_i)
+    return
 
     positions = graph.new_vertex_property('vector<float>')
     for node in graph.vertices():
@@ -56,14 +57,14 @@ def image_graph(
 
         graph_tool.draw.graph_draw(
             graph, pos=positions, vertex_fill_color=colors, vertex_size=1,
-            edge_pen_width=graph.ep.weight, output=fname,
-            output_size=image.shape,
+            edge_pen_width=graph.ep.weight,
+            output=fname, output_size=image.shape,
         )
     else:
         graph_tool.draw.graph_draw(
             graph, pos=positions, vertex_size=0,
-            edge_pen_width=graph.ep.weight, output=fname,
-            output_size=image.shape,
+            edge_pen_width=graph.ep.weight,
+            output=fname, output_size=image.shape,
         )
 
 
@@ -103,24 +104,28 @@ def sbm_partition(
         plt.savefig(fname, dpi=1000)
 
 
-def hsbm_partition(image_id: str):
+def hsbm_partition(
+        image_id: str, d_max: float=1.5, sigma_x: float=10, sigma_i: float=3,
+        blur: Optional[float]=None):
     image = _read_image(image_id)
-    graph = image_to_graph(image, 2, sigma_x=10, sigma_i=20)
+    image = transform.rescale(image, 0.5)
+
+    if blur is not None:
+        image = filters.gaussian_filter(image, sigma=blur)
+
+    graph = image_to_graph(image, d_max=d_max, sigma_x=sigma_x, sigma_i=sigma_i)
 
     seg_masks = hsbm_segmentation(graph, image)
 
-    ax = plt.subplot(421)
-    ax.imshow(image)
-    ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
+    fname = 'poster/koala_seg_dmax_%d_sx_%d_si_%d' % (d_max, sigma_x, sigma_i)
+    if blur is not None:
+        fname += '_gauss_%d' % int(blur)
 
-    for idx, seg_mask in enumerate(seg_masks[:7]):
-        ax = plt.subplot(4, 2, idx + 2)
-        ax.imshow(segmentation.mark_boundaries(image, seg_mask, color=[1, 1, 1]))
-        ax.grid(False), ax.set_xticklabels([]), ax.set_yticklabels([])
-
-    plt.tight_layout()
-    plt.savefig('report/images/hsbm_%s_segmentation.png' % image_id, dpi=400)
-    plt.show()
+    for idx, seg_mask in enumerate(seg_masks):
+        plt.clf()
+        plt.imshow(segmentation.mark_boundaries(image, seg_mask, color=[1, 1, 1]))
+        plt.grid(False), plt.set_xticklabels([]), plt.set_yticklabels([])
+        plt.savefig('%s_%s.png' % (fname, idx))
 
 
 def true_segmentation(image_id: str):
