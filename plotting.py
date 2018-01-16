@@ -31,13 +31,12 @@ def image_graph(
         image_id: str, d_max: float=1.5, sigma_x: float=10, sigma_i: float=3,
         color: bool=False, blur: Optional[float]=None):
 
-    image = _read_image(image_id)[:200, :200]
+    image = _read_image(image_id)
 
     if blur is not None:
         image = filters.gaussian_filter(image, sigma=blur)
 
     graph = image_to_graph(image, d_max=d_max, sigma_x=sigma_x, sigma_i=sigma_i)
-    return
 
     positions = graph.new_vertex_property('vector<float>')
     for node in graph.vertices():
