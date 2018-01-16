@@ -117,14 +117,14 @@ def hsbm_partition(
 
     seg_masks = hsbm_segmentation(graph, image)
 
-    fname = 'poster/koala_seg_dmax_%d_sx_%d_si_%d' % (d_max, sigma_x, sigma_i)
+    fname = 'poster/koala_hseg_dmax_%d_sx_%d_si_%d' % (d_max, sigma_x, sigma_i)
     if blur is not None:
         fname += '_gauss_%d' % int(blur)
 
     for idx, seg_mask in enumerate(seg_masks):
         plt.clf()
         plt.imshow(segmentation.mark_boundaries(image, seg_mask, color=[1, 1, 1]))
-        plt.grid(False), plt.set_xticklabels([]), plt.set_yticklabels([])
+        plt.grid(False), plt.axis('off')
         plt.savefig('%s_%s.png' % (fname, idx))
 
 
