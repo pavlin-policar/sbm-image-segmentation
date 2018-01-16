@@ -5,6 +5,6 @@ sigma_i=( 4 5 6 );
 
 for g in ${gauss[@]}; do
 	for si in ${sigma_i[@]}; do
-		docker run -it -d --rm -v /home/ppolicar/nfs/sbm-image-segmentation:/sbm -w /sbm sbm python plotting.py image-graph data/koala_cropped.jpg --blur $g --sigma-i $si
+		docker run -it -d --rm -v /home/ppolicar/nfs/sbm-image-segmentation:/sbm -w /sbm pavlin/sbm python plotting.py image-graph data/koala_cropped.jpg --blur $g --sigma-i $si
 	done
 done
