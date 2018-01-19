@@ -69,9 +69,11 @@ def image_graph(
 
 def sbm_partition(
         image_id: str, d_max: float=1.5, sigma_x: float=10, sigma_i: float=3,
-        blur: Optional[float]=None, show_original: bool=False):
+        blur: Optional[float]=None, show_original: bool=False,
+        scale: float=0.5):
 
     image = _read_image(image_id)
+    image = transform.rescale(image, float(scale))
 
     if blur is not None:
         image = filters.gaussian_filter(image, sigma=blur)
@@ -105,9 +107,9 @@ def sbm_partition(
 
 def hsbm_partition(
         image_id: str, d_max: float=1.5, sigma_x: float=10, sigma_i: float=3,
-        blur: Optional[float]=None):
+        blur: Optional[float]=None, scale: float=0.5):
     image = _read_image(image_id)
-    image = transform.rescale(image, 0.5)
+    image = transform.rescale(image, float(scale))
 
     if blur is not None:
         image = filters.gaussian_filter(image, sigma=blur)
