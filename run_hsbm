@@ -11,3 +11,5 @@ for d in ${d_max[@]}; do
 		done
 	done
 done
+
+docker run -it --rm -v /home/ppolicar/nfs/sbm-image-segmentation:/sbm -w /sbm pavlin/sbm python plotting.py hsbm-partition data/koala_cropped.jpg --blur 1 --d-max 7 --sigma-x 5 --sigma-i 4
